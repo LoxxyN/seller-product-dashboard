@@ -1,19 +1,21 @@
 import { NavLink } from 'react-router'
 
 interface NavlinkProps {
-	label: string
+	children: React.ReactNode
 	to: string
 }
 
-export const Navlink: React.FC<NavlinkProps> = ({ to, label }) => {
+export const Navlink: React.FC<NavlinkProps> = ({ children, to }) => {
 	return (
 		<NavLink
 			className={({ isActive }) =>
-				isActive ? 'underline underline-offset-2' : 'hover:underline underline-offset-2 text-muted'
+				isActive
+					? 'navbar__links-link--active navbar__links-link'
+					: 'navbar__links-link'
 			}
 			to={to}
 		>
-			{label}
+			{children}
 		</NavLink>
 	)
 }

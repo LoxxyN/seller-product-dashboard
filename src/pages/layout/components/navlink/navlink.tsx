@@ -9,9 +9,7 @@ export const Navlink: React.FC<NavlinkProps> = ({ children, to }) => {
 	return (
 		<NavLink
 			className={({ isActive }) =>
-				isActive
-					? 'navbar__links-link--active navbar__links-link'
-					: 'navbar__links-link'
+				isActive ? 'navbar__links-link--active navbar__links-link' : 'navbar__links-link'
 			}
 			to={to}
 		>

@@ -1,0 +1,36 @@
+.navbar__links-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.navbar__links-item {
+	display: flex;
+	border-radius: 8px;
+	padding: 6px 12px;
+	transition: all 0.15s ease-in;
+	font-size: 15px;
+	font-weight: 500;
+
+	&:hover {
+		background-color: var(--color-accent-soft-hover);
+
+		span {
+			color: var(--color-accent);
+		}
+	}
+}
+
+.navbar__links-item:has(.navbar__links-link--active) {
+	background-color: var(--color-accent-soft);
+	color: var(--color-accent);
+}
+
+.navbar__links-link {
+	width: 100%;
+	display: flex;
+	gap: 10px;
+}
+
+.navbar__links-link--active {
+	width: 100%;
+}

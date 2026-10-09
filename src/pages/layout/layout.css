@@ -1,0 +1,30 @@
+.layout {
+	display: grid;
+	grid-template-columns: 240px minmax(0, 1fr);
+	grid-template-rows: 56px minmax(0, 1fr);
+
+	height: 100vh;
+	overflow: hidden;
+}
+
+.header__wrapper {
+	grid-area: 1 / 1 / 2 / 3;
+}
+
+.sidebar__wrapper {
+	grid-area: 2 / 1 / 3 / 2;
+	overflow-y: auto;
+}
+
+.content__wrapper {
+	grid-area: 2 / 2 / 3 / 3;
+	min-width: 0;
+	overflow-y: auto;
+}
+
+.content__wrapper main {
+	width: 100%;
+	height: 100%;
+	max-width: 1200px;
+	box-sizing: border-box;
+}

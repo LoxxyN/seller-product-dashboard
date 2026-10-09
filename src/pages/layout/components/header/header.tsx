@@ -7,9 +7,6 @@ import { Avatar } from "../avatar";
 export const Header = () => {
   return (
     <header>
-      {/* <div className='header__wrapper'>
-				<Navbar />
-			</div> */}
       <div className="py-[18.5px] px-6 flex justify-between">
         <Logo />
         <div className="flex gap-4">

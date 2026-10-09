@@ -1,11 +1,23 @@
 import { Outlet } from 'react-router'
-import { Header } from './components'
+import { Header, Sidebar } from './components'
+import './layout.css'
 
 export const Layout = () => {
 	return (
-		<main>
-			<Header />
-			<Outlet />
-		</main>
+		<div className='layout'>
+			<div className='header__wrapper'>
+				<Header />
+			</div>
+
+			<div className='sidebar__wrapper'>
+				<Sidebar />
+			</div>
+
+			<div className='content__wrapper'>
+				<main>
+					<Outlet />
+				</main>
+			</div>
+		</div>
 	)
 }

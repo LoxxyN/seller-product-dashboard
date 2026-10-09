@@ -8,11 +8,11 @@ export default defineConfig({
 	plugins: [react(), tailwindcss()],
 	resolve: {
 		alias: {
-			'@app': path.resolve(__dirname, './src/app'),
-			'@pages': path.resolve(__dirname, './src/pages'),
-			'@shared': path.resolve(__dirname, './src/shared'),
-			'@widgets': path.resolve(__dirname, './src/widgets'),
-			'@features': path.resolve(__dirname, './src/features'),
+			'@app': path.resolve(import.meta.dirname, './src/app'),
+			'@pages': path.resolve(import.meta.dirname, './src/pages'),
+			'@shared': path.resolve(import.meta.dirname, './src/shared'),
+			'@widgets': path.resolve(import.meta.dirname, './src/widgets'),
+			'@features': path.resolve(import.meta.dirname, './src/features'),
 		},
 	},
 })

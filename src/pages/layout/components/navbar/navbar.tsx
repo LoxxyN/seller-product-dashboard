@@ -1,33 +1,15 @@
-import { NavLink } from 'react-router'
-import { ROUTER } from '../../../../shared/lib'
+import { ROUTER } from '@shared/lib'
+import { Navlink } from '../navlink'
 
 export const Navbar = () => {
 	return (
 		<nav>
 			<ul className='flex gap-4'>
 				<li>
-					<NavLink
-						className={({ isActive }) =>
-							isActive
-								? 'underline underline-offset-2'
-								: 'hover:underline underline-offset-2 text-muted'
-						}
-						to={ROUTER['analitycs']}
-					>
-						Аналитика
-					</NavLink>
+					<Navlink to={ROUTER['analitycs']} label='Аналитика' />
 				</li>
 				<li>
-					<NavLink
-						className={({ isActive }) =>
-							isActive
-								? 'underline underline-offset-2'
-								: 'hover:underline underline-offset-2 text-muted'
-						}
-						to={ROUTER['produtcs']}
-					>
-						Товары
-					</NavLink>
+					<Navlink to={ROUTER['produtcs']} label='Товары' />
 				</li>
 			</ul>
 		</nav>

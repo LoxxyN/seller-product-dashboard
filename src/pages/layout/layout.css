@@ -8,10 +8,12 @@
 }
 
 .header__wrapper {
+	border-bottom: 1px solid var(--separator);
 	grid-area: 1 / 1 / 2 / 3;
 }
 
 .sidebar__wrapper {
+	border-right: 1px solid var(--separator);
 	grid-area: 2 / 1 / 3 / 2;
 	overflow-y: auto;
 }
@@ -23,8 +25,8 @@
 }
 
 .content__wrapper main {
+	padding: 24px;
 	width: 100%;
 	height: 100%;
-	max-width: 1200px;
 	box-sizing: border-box;
 }

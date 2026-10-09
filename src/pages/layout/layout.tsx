@@ -14,7 +14,7 @@ export const Layout = () => {
 			</div>
 
 			<div className='content__wrapper'>
-				<main>
+				<main className='bg-surface-secondary'>
 					<Outlet />
 				</main>
 			</div>

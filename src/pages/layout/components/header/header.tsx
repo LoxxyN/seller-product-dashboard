@@ -1,19 +1,17 @@
-// import { Navbar } from '../navbar'
-import { Avatar as HAvatar } from "@heroui/react";
-import { Logo } from "../logo";
-import { Switcher } from "../switcher";
-import { Avatar } from "../avatar";
+import { Avatar } from '../avatar'
+import { Logo } from '../logo'
+import { ThemeSwitcher } from '../theme-switcher'
 
 export const Header = () => {
-  return (
-    <header>
-      <div className="py-[18.5px] px-6 flex justify-between">
-        <Logo />
-        <div className="flex gap-4">
-          <Switcher />
-          <Avatar />
-        </div>
-      </div>
-    </header>
-  );
-};
+	return (
+		<header>
+			<div className='px-6 py-2 flex justify-between items-center'>
+				<Logo />
+				<div className='flex gap-4 items-center'>
+					<ThemeSwitcher />
+					<Avatar />
+				</div>
+			</div>
+		</header>
+	)
+}

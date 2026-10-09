@@ -84,3 +84,15 @@
 	--warning: oklch(82.03% 0.1399 82.34);
 	--warning-foreground: oklch(21.03% 0.0059 82.34);
 }
+
+@font-face {
+	font-family: 'Inter';
+	src: url('/font/Inter-Medium.woff2') format('woff2');
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('/font/Inter-Regular.woff2') format('woff2');
+	font-weight: 400;
+}

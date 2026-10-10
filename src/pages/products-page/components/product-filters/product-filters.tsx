@@ -1,34 +1,40 @@
 import type { Key } from '@heroui/react'
-import { SearchInput } from '@shared/ui'
 import { useState } from 'react'
 import { CategorySelect, type ICategories } from '../category-select'
 import { ResetFilterButton } from '../reset-filters-button'
+import { Search } from '../search'
 import { SortingSelect, type ISorting } from '../sorting-select'
 import { StatusSelect, type IStatus } from '../status-select'
 import { StockSelect, type IStock } from '../stock-select'
 
-const sortingsMock: ISorting[] = [
-	{ id: 'asc', label: 'По убыванию' },
-	{ id: 'desc', label: 'По возрастанию' },
-	{ id: 'recent', label: 'Недавние' },
-]
+interface IMocks {
+	sortings: ISorting[]
+	statuses: IStatus[]
+	categories: ICategories[]
+	stock: IStock[]
+}
 
-const statusesMock: IStatus[] = [
-	{ id: 'all', label: 'Все' },
-	{ id: 'active', label: 'Активен' },
-	{ id: 'draft', label: 'Черновик' },
-	{ id: 'archive', label: 'Архив' },
-]
-
-const categoriesMock: ICategories[] = [
-	{ id: 'electronic', label: 'Электороника' },
-	{ id: 'garden', label: 'Садовые принадлежности' },
-]
-
-const stockMock: IStock[] = [
-	{ id: 'in_stock', label: 'В наличии' },
-	{ id: 'not_in_stock', label: 'Нет в наличии' },
-]
+const mocks: IMocks = {
+	sortings: [
+		{ id: 'asc', label: 'По убыванию' },
+		{ id: 'desc', label: 'По возрастанию' },
+		{ id: 'recent', label: 'Недавние' },
+	],
+	statuses: [
+		{ id: 'all', label: 'Все' },
+		{ id: 'active', label: 'Активен' },
+		{ id: 'draft', label: 'Черновик' },
+		{ id: 'archive', label: 'Архив' },
+	],
+	categories: [
+		{ id: 'electronic', label: 'Электороника' },
+		{ id: 'garden', label: 'Садовые принадлежности' },
+	],
+	stock: [
+		{ id: 'in_stock', label: 'В наличии' },
+		{ id: 'not_in_stock', label: 'Нет в наличии' },
+	],
+}
 
 export const ProductFilters = () => {
 	const [searchValue, setSearchValue] = useState<string>('')
@@ -46,27 +52,29 @@ export const ProductFilters = () => {
 
 	return (
 		<div className='my-5 flex justify-between items-center'>
-			<SearchInput
-				className='w-1/3'
+			<Search
 				value={searchValue}
 				onChange={newValue => setSearchValue(newValue)}
-				placeholder='Поиск по названию или артикулу'
 			/>
 			<div className='flex gap-2'>
 				<CategorySelect
-					categories={categoriesMock}
+					categories={mocks.categories}
 					onChange={newValue => setCategory(newValue)}
 					value={category}
 				/>
 				<StatusSelect
-					statuses={statusesMock}
+					statuses={mocks.statuses}
 					value={status}
 					onChange={newValue => setStatus(newValue)}
 				/>
-				<StockSelect stock={stockMock} value={stock} onChange={newValue => setStock(newValue)} />
+				<StockSelect
+					stock={mocks.stock}
+					value={stock}
+					onChange={newValue => setStock(newValue)}
+				/>
 				<ResetFilterButton onClick={resetFilters} />
 				<SortingSelect
-					sortings={sortingsMock}
+					sortings={mocks.sortings}
 					value={sorting}
 					onChange={newValue => setSorting(newValue)}
 				/>

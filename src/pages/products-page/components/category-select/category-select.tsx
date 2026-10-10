@@ -16,7 +16,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({ categories, valu
 	return (
 		<>
 			<Select<ICategories>
-				className='min-w-32 w-fit'
+				className='min-w-36 w-fit'
 				value={value}
 				onChange={onChange}
 				items={categories}

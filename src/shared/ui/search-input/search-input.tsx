@@ -5,6 +5,7 @@ type SearchInputProps = {
 	description?: string
 	placeholder?: string
 	name?: string
+	className?: string
 	errorMessage?: string
 	isInvalid?: boolean
 	value: string
@@ -16,6 +17,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 	name = 'search',
 	isInvalid,
 	label,
+	className,
 	errorMessage,
 	description,
 	placeholder,
@@ -23,7 +25,13 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 	onSubmit,
 }) => {
 	return (
-		<SearchField name={name} isInvalid={isInvalid} onChange={onChange} onSubmit={onSubmit}>
+		<SearchField
+			className={className}
+			name={name}
+			isInvalid={isInvalid}
+			onChange={onChange}
+			onSubmit={onSubmit}
+		>
 			<Label>{label}</Label>
 			<SearchField.Group>
 				<SearchField.SearchIcon />

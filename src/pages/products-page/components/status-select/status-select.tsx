@@ -16,7 +16,7 @@ export const StatusSelect: React.FC<StatusSelectProps> = ({ statuses, value, onC
 	return (
 		<>
 			<Select<IStatus>
-				className='min-w-32 w-fit'
+				className='min-w-36 w-fit'
 				value={value}
 				onChange={onChange}
 				items={statuses}

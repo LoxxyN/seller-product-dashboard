@@ -12,15 +12,11 @@ type StockSelectProps = {
 	onChange: (value: Key | null) => void
 }
 
-export const StockSelect: React.FC<StockSelectProps> = ({
-	stock,
-	value,
-	onChange,
-}) => {
+export const StockSelect: React.FC<StockSelectProps> = ({ stock, value, onChange }) => {
 	return (
 		<>
 			<Select<IStock>
-				className='min-w-40 w-fit'
+				className='min-w-42 w-fit'
 				value={value}
 				onChange={onChange}
 				items={stock}

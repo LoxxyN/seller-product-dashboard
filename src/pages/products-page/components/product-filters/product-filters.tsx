@@ -2,6 +2,7 @@ import type { Key } from '@heroui/react'
 import { SearchInput } from '@shared/ui'
 import { useState } from 'react'
 import { CategorySelect, type ICategories } from '../category-select'
+import { ResetFilterButton } from '../reset-filters-button'
 import { StatusSelect, type IStatus } from '../status-select'
 
 const statusesMock: IStatus[] = [
@@ -17,15 +18,20 @@ const categoriesMock: ICategories[] = [
 ]
 
 export const ProductFilters = () => {
-	const [value, setValue] = useState('')
-	const [category, setCategory] = useState<Key | null>('')
-	const [status, setStatus] = useState<Key | null>('')
+	const [searchValue, setSearchValue] = useState<string>('')
+	const [category, setCategory] = useState<Key | null>(null)
+	const [status, setStatus] = useState<Key | null>(null)
+
+	const resetFilters = () => {
+		setCategory(null)
+		setStatus(null)
+	}
 
 	return (
 		<div className='my-5 flex gap-2 items-center'>
 			<SearchInput
-				value={value}
-				onChange={newValue => setValue(newValue)}
+				value={searchValue}
+				onChange={newValue => setSearchValue(newValue)}
 				placeholder='Поиск по названию или артикулу'
 			/>
 			<CategorySelect
@@ -38,6 +44,7 @@ export const ProductFilters = () => {
 				value={status}
 				onChange={newValue => setStatus(newValue)}
 			/>
+			<ResetFilterButton onClick={resetFilters} />
 		</div>
 	)
 }

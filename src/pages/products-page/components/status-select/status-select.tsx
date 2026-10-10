@@ -1,26 +1,26 @@
 import type { Key } from '@heroui/react'
 import { Select } from '@shared/ui'
 
-export interface ICategories {
+export interface IStatus {
 	id: string
 	label: string
 }
 
-type CategorySelectProps = {
-	categories: ICategories[]
+type StatusSelectProps = {
+	statuses: IStatus[]
 	value: Key | null
 	onChange: (value: Key | null) => void
 }
 
-export const CategorySelect: React.FC<CategorySelectProps> = ({ categories, value, onChange }) => {
+export const StatusSelect: React.FC<StatusSelectProps> = ({ statuses, value, onChange }) => {
 	return (
 		<>
-			<Select<ICategories>
+			<Select<IStatus>
 				className='min-w-32 w-fit'
 				value={value}
 				onChange={onChange}
-				items={categories}
-				placeholder='Категория'
+				items={statuses}
+				placeholder='Статус'
 			/>
 		</>
 	)

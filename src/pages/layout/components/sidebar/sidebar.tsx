@@ -1,5 +1,5 @@
 import { CircleQuestionMark } from 'lucide-react'
-import { Navbar } from './ui'
+import { Navbar } from '../navbar'
 
 export const Sidebar = () => {
 	return (

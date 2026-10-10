@@ -1,4 +1,6 @@
-import { Avatar, Logo, ThemeSwitcher } from './ui'
+import { Avatar } from '../avatar'
+import { Logo } from '../logo'
+import { ThemeSwitcher } from '../theme-switcher'
 
 export const Header = () => {
 	return (

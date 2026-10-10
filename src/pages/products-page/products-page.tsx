@@ -1,6 +1,6 @@
 import { Button } from '@heroui/react'
 import { Plus } from 'lucide-react'
-import { PageHeading } from './components'
+import { PageHeading, ProductFilters } from './components'
 
 export const ProductsPage = () => {
 	return (
@@ -14,6 +14,7 @@ export const ProductsPage = () => {
 					</Button>
 				}
 			/>
+			<ProductFilters />
 		</>
 	)
 }

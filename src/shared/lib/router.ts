@@ -1,8 +1,4 @@
-type TRouterLinks = '/analytics' | '/products'
-type TRouterLabel = 'analitycs' | 'produtcs'
-type TRouter = Record<TRouterLabel, TRouterLinks>
-
-export const ROUTER: Readonly<TRouter> = {
+export const ROUTER = {
 	analitycs: '/analytics',
 	produtcs: '/products',
-}
+} as const

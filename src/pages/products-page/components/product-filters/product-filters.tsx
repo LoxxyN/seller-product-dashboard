@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { CategorySelect, type ICategories } from '../category-select'
 import { ResetFilterButton } from '../reset-filters-button'
 import { StatusSelect, type IStatus } from '../status-select'
+import { StockSelect, type IStock } from '../stock-select'
 
 const statusesMock: IStatus[] = [
 	{ id: 'all', label: 'Все' },
@@ -17,14 +18,21 @@ const categoriesMock: ICategories[] = [
 	{ id: 'garden', label: 'Садовые принадлежности' },
 ]
 
+const stockMock: IStock[] = [
+	{ id: 'in_stock', label: 'В наличии' },
+	{ id: 'not_in_stock', label: 'Нет в наличии' },
+]
+
 export const ProductFilters = () => {
 	const [searchValue, setSearchValue] = useState<string>('')
 	const [category, setCategory] = useState<Key | null>(null)
 	const [status, setStatus] = useState<Key | null>(null)
+	const [stock, setStock] = useState<Key | null>(null)
 
 	const resetFilters = () => {
 		setCategory(null)
 		setStatus(null)
+		setStock(null)
 	}
 
 	return (
@@ -43,6 +51,11 @@ export const ProductFilters = () => {
 				statuses={statusesMock}
 				value={status}
 				onChange={newValue => setStatus(newValue)}
+			/>
+			<StockSelect
+				stock={stockMock}
+				value={stock}
+				onChange={newValue => setStock(newValue)}
 			/>
 			<ResetFilterButton onClick={resetFilters} />
 		</div>

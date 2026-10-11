@@ -14,6 +14,7 @@ type SelectProps<Items extends SelectItem> = {
 	className?: string
 	fullWidth?: boolean
 	items: Items[]
+	hasClearButton: boolean
 	value: Key | null
 	onChange: (value: Key | null) => void
 }
@@ -28,6 +29,7 @@ export const Select = <T extends SelectItem>({
 	value,
 	className,
 	onChange,
+	hasClearButton,
 }: SelectProps<T>) => {
 	return (
 		<HSelect
@@ -41,7 +43,7 @@ export const Select = <T extends SelectItem>({
 			<Label>{label}</Label>
 			<HSelect.Trigger>
 				<HSelect.Value />
-				<HSelect.ClearButton />
+				{hasClearButton && <HSelect.ClearButton />}
 				<HSelect.Indicator />
 			</HSelect.Trigger>
 			<Description>{description}</Description>

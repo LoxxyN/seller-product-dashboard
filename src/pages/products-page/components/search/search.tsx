@@ -6,11 +6,7 @@ type SearchProps = {
 	onSubmit?: (value: string) => void
 }
 
-export const Search: React.FC<SearchProps> = ({
-	value,
-	onChange,
-	onSubmit,
-}) => {
+export const Search: React.FC<SearchProps> = ({ value, onChange, onSubmit }) => {
 	return (
 		<SearchInput
 			className='w-1/3'

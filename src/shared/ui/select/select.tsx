@@ -14,7 +14,7 @@ type SelectProps<Items extends SelectItem> = {
 	className?: string
 	fullWidth?: boolean
 	items: Items[]
-	hasClearButton: boolean
+	hasClearButton?: boolean
 	value: Key | null
 	onChange: (value: Key | null) => void
 }
@@ -29,7 +29,7 @@ export const Select = <T extends SelectItem>({
 	value,
 	className,
 	onChange,
-	hasClearButton,
+	hasClearButton = false,
 }: SelectProps<T>) => {
 	return (
 		<HSelect

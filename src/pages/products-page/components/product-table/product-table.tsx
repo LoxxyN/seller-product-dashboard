@@ -1,8 +1,8 @@
 import type { Selection, SortDescriptor } from '@heroui/react'
+import { mockProducts } from '@shared/lib'
 import { Table } from '@shared/ui'
 import { useState } from 'react'
 import { productColumns } from './columns'
-import { mockProducts } from './model/mock-data'
 import { ProductsTableEmpty } from './table-empty'
 import { useSortedProducts } from './use-sorted-products'
 

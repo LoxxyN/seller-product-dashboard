@@ -14,7 +14,7 @@ export const Layout = () => {
 			</div>
 
 			<div className='content__wrapper'>
-				<main className='bg-surface-secondary'>
+				<main className='border border-separator'>
 					<Outlet />
 				</main>
 			</div>

@@ -4,7 +4,7 @@ import { ThemeSwitcher } from '../theme-switcher'
 
 export const Header = () => {
 	return (
-		<header>
+		<header className='bg-surface'>
 			<div className='px-6 py-2 flex justify-between items-center'>
 				<Logo />
 				<div className='flex gap-4 items-center'>

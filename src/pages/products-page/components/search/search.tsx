@@ -1,6 +1,6 @@
 import { SearchInput } from '@shared/ui'
 
-type SearchProps = {
+interface SearchProps {
 	value: string
 	onChange: (value: string) => void
 	onSubmit?: (value: string) => void

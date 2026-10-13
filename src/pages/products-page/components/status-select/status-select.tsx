@@ -7,7 +7,7 @@ export interface IStatus {
 	label: string
 }
 
-type StatusSelectProps = {
+interface StatusSelectProps {
 	statuses: IStatus[]
 	value: Key | null
 	onChange: (value: Key | null) => void

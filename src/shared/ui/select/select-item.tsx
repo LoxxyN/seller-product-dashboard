@@ -1,6 +1,6 @@
 import { Label, ListBox } from '@heroui/react'
 
-type SelectItemProps = {
+interface SelectItemProps {
 	id: string
 	label: string
 }

@@ -6,7 +6,7 @@ export interface IStock {
 	label: string
 }
 
-type StockSelectProps = {
+interface StockSelectProps {
 	stock: IStock[]
 	value: Key | null
 	onChange: (value: Key | null) => void

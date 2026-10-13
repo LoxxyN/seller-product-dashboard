@@ -6,7 +6,7 @@ interface SelectItem {
 	label: string
 }
 
-type SelectProps<Items extends SelectItem> = {
+interface SelectProps<Items extends SelectItem> {
 	placeholder?: string
 	variant?: 'primary' | 'secondary'
 	label?: string

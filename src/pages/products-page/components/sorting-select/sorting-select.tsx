@@ -6,7 +6,7 @@ export interface ISorting {
 	label: string
 }
 
-type SortingSelectProps = {
+interface SortingSelectProps {
 	sortings: ISorting[]
 	value: Key | null
 	onChange: (value: Key | null) => void

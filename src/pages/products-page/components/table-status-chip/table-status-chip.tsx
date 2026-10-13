@@ -4,7 +4,7 @@ import type { TProductStatus } from '@shared/types'
 type TLabel = 'Активно' | 'Архив' | 'Черновик'
 type TColor = 'success' | 'default' | 'danger'
 
-type TableStatusChipProps = {
+interface TableStatusChipProps {
 	status: TProductStatus
 }
 

@@ -2,7 +2,7 @@ import type { Key } from '@heroui/react'
 import { Select } from '@shared/ui'
 
 export interface IStock {
-	id: string
+	id: 'not_in_stock' | 'in_stock'
 	label: string
 }
 

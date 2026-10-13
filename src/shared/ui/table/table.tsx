@@ -1,30 +1,33 @@
 import type { Key, Selection, SortDescriptor } from '@heroui/react'
-import { Table as HTable } from '@heroui/react'
+import { cn, Table as HTable } from '@heroui/react'
 
-export interface ITableRow {
+interface ITableRow {
 	id: Key
 }
 
-export interface ITableBaseColumn {
+interface ITableBaseColumn<T extends ITableRow> {
 	label: string
 	isRowHeader?: boolean
 	allowsSorting?: boolean
+	align?: 'start' | 'end'
+	width?: number | string
 	renderHeader?: () => React.ReactNode
+	renderCell?: (item: T) => React.ReactNode
 }
 
-export interface ITableDataColumn<T extends ITableRow> extends ITableBaseColumn {
+interface ITableDataColumn<T extends ITableRow> extends ITableBaseColumn<T> {
 	id: Extract<keyof T, string>
 	isCustom?: false
 }
 
-export interface ITableCustomColumn extends ITableBaseColumn {
+interface ITableCustomColumn<T extends ITableRow> extends ITableBaseColumn<T> {
 	id: string
 	isCustom: true
 }
 
-export type TableColumn<T extends ITableRow> = ITableDataColumn<T> | ITableCustomColumn
+export type TableColumn<T extends ITableRow> = ITableDataColumn<T> | ITableCustomColumn<T>
 
-export interface ITableClassNames {
+interface ITableClassNames {
 	root?: string
 	scrollContainer?: string
 	content?: string
@@ -36,174 +39,105 @@ export interface ITableClassNames {
 	footer?: string
 }
 
-export interface ITableSlots {
-	top?: React.ReactNode
-	footer?: React.ReactNode
-	loadMore?: React.ReactNode
-}
-
-export interface ITableRenderContext<T extends ITableRow, Column extends TableColumn<T>> {
-	item: T
-	column: Column
-	columnIndex: number
-}
-
-export type TableProps<T extends ITableRow, Column extends TableColumn<T> = TableColumn<T>> = {
-	columns: Column[]
+interface ITableProps<T extends ITableRow> {
+	columns: TableColumn<T>[]
 	items: T[]
-	ariaLabel?: string
-	aria_label?: string
-	slots?: ITableSlots
+	ariaLabel: string
+	variant?: 'primary' | 'secondary'
 	classNames?: ITableClassNames
-	footerSlot?: React.ReactNode
-	footer_slot?: React.ReactNode
 	selectionMode?: 'none' | 'single' | 'multiple'
 	selectedKeys?: Selection
 	onSelectionChange?: (keys: Selection) => void
 	sortDescriptor?: SortDescriptor
 	onSortChange?: (descriptor: SortDescriptor) => void
-	renderCell?: (item: T, column: Column) => React.ReactNode
 	renderEmptyState?: () => React.ReactNode
-	getColumnProps?: (column: Column) => Partial<React.ComponentProps<typeof HTable.Column>>
-	getRowProps?: (item: T) => Partial<React.ComponentProps<typeof HTable.Row<T>>>
-	getCellProps?: (
-		context: ITableRenderContext<T, Column>,
-	) => Partial<React.ComponentProps<typeof HTable.Cell>>
-	rootProps?: Partial<React.ComponentProps<typeof HTable>>
-	scrollContainerProps?: Partial<React.ComponentProps<typeof HTable.ScrollContainer>>
-	contentProps?: Partial<React.ComponentProps<typeof HTable.Content>>
-	headerProps?: Partial<React.ComponentProps<typeof HTable.Header<Column>>>
-	bodyProps?: Partial<React.ComponentProps<typeof HTable.Body<T>>>
-	footerProps?: Partial<React.ComponentProps<typeof HTable.Footer>>
+	footer?: React.ReactNode
 }
 
-const renderDefaultCell = <T extends ITableRow, Column extends TableColumn<T>>(
-	item: T,
-	column: Column,
-) => {
+const renderDefaultCell = <T extends ITableRow>(item: T, column: TableColumn<T>) => {
 	if (column.isCustom) {
 		return null
 	}
 
 	const value = item[column.id]
 
-	if (value === null || value === undefined) {
-		return null
-	}
-
-	return String(value)
+	return value === null || value === undefined ? null : String(value)
 }
 
-export const Table = <T extends ITableRow, Column extends TableColumn<T> = TableColumn<T>>({
+export const Table = <T extends ITableRow>({
 	columns,
 	items,
 	ariaLabel,
-	aria_label,
-	slots,
+	variant,
 	classNames,
-	footerSlot,
-	footer_slot,
 	selectionMode = 'none',
 	selectedKeys,
 	onSelectionChange,
 	sortDescriptor,
 	onSortChange,
-	renderCell,
 	renderEmptyState,
-	getColumnProps,
-	getRowProps,
-	getCellProps,
-	rootProps,
-	scrollContainerProps,
-	contentProps,
-	headerProps,
-	bodyProps,
-	footerProps,
-}: TableProps<T, Column>) => {
-	const footer = slots?.footer ?? footerSlot ?? footer_slot
-
-	return (
-		<HTable {...rootProps} className={classNames?.root ?? rootProps?.className}>
-			{slots?.top}
-			<HTable.ScrollContainer
-				{...scrollContainerProps}
-				className={classNames?.scrollContainer ?? scrollContainerProps?.className}
+	footer,
+}: ITableProps<T>) => (
+	<HTable variant={variant} className={classNames?.root}>
+		<HTable.ScrollContainer className={classNames?.scrollContainer}>
+			<HTable.Content
+				aria-label={ariaLabel}
+				className={classNames?.content}
+				selectionMode={selectionMode}
+				selectedKeys={selectedKeys}
+				onSelectionChange={onSelectionChange}
+				sortDescriptor={sortDescriptor}
+				onSortChange={onSortChange}
 			>
-				<HTable.Content
-					{...contentProps}
-					aria-label={ariaLabel ?? aria_label ?? contentProps?.['aria-label']}
-					className={classNames?.content ?? contentProps?.className}
-					selectionMode={selectionMode}
-					selectedKeys={selectedKeys}
-					onSelectionChange={onSelectionChange}
-					sortDescriptor={sortDescriptor}
-					onSortChange={onSortChange}
-				>
-					<HTable.Header
-						{...headerProps}
-						className={classNames?.header ?? headerProps?.className}
-						columns={columns}
-					>
-						{column => {
-							const columnProps = getColumnProps?.(column)
+				<HTable.Header className={classNames?.header} columns={columns}>
+					{column => (
+						<HTable.Column
+							id={column.id}
+							className={cn(column.align === 'end' && 'text-end', classNames?.column)}
+							style={column.width === undefined ? undefined : { width: column.width }}
+							isRowHeader={column.isRowHeader}
+							allowsSorting={column.allowsSorting}
+						>
+							{({ sortDirection }) => {
+								if (column.renderHeader) return column.renderHeader()
 
-							return (
-								<HTable.Column
-									{...columnProps}
-									id={column.id}
-									className={classNames?.column ?? columnProps?.className}
-									isRowHeader={column.isRowHeader}
-									allowsSorting={column.allowsSorting}
-								>
-									{column.renderHeader ? column.renderHeader() : column.label}
-								</HTable.Column>
-							)
-						}}
-					</HTable.Header>
-					<HTable.Body
-						{...bodyProps}
-						className={classNames?.body ?? bodyProps?.className}
-						items={items}
-						renderEmptyState={renderEmptyState}
-					>
-						{item => {
-							const rowProps = getRowProps?.(item)
+								if (column.allowsSorting) {
+									return (
+										<HTable.SortableColumnHeader
+											sortDirection={sortDirection}
+											className={cn(column.align === 'end' && 'justify-end')}
+										>
+											{column.label}
+										</HTable.SortableColumnHeader>
+									)
+								}
 
-							return (
-								<HTable.Row
-									{...rowProps}
-									id={item.id}
-									className={classNames?.row ?? rowProps?.className}
-								>
-									{columns.map((column, columnIndex) => {
-										const cellProps = getCellProps?.({
-											item,
-											column,
-											columnIndex,
-										})
-
-										return (
-											<HTable.Cell
-												{...cellProps}
-												key={column.id}
-												className={classNames?.cell ?? cellProps?.className}
-											>
-												{renderCell ? renderCell(item, column) : renderDefaultCell(item, column)}
-											</HTable.Cell>
-										)
-									})}
-									{slots?.loadMore}
-								</HTable.Row>
-							)
-						}}
-					</HTable.Body>
-				</HTable.Content>
-			</HTable.ScrollContainer>
-			{footer && (
-				<HTable.Footer {...footerProps} className={classNames?.footer ?? footerProps?.className}>
-					{footer}
-				</HTable.Footer>
-			)}
-		</HTable>
-	)
-}
+								return column.label
+							}}
+						</HTable.Column>
+					)}
+				</HTable.Header>
+				<HTable.Body className={classNames?.body} renderEmptyState={renderEmptyState}>
+					<HTable.Collection items={items}>
+						{item => (
+							<HTable.Row id={item.id} className={classNames?.row}>
+								<HTable.Collection items={columns}>
+									{column => (
+										<HTable.Cell
+											className={cn(column.align === 'end' && 'text-end', classNames?.cell)}
+										>
+											{column.renderCell
+												? column.renderCell(item)
+												: renderDefaultCell(item, column)}
+										</HTable.Cell>
+									)}
+								</HTable.Collection>
+							</HTable.Row>
+						)}
+					</HTable.Collection>
+				</HTable.Body>
+			</HTable.Content>
+		</HTable.ScrollContainer>
+		{footer && <HTable.Footer className={classNames?.footer}>{footer}</HTable.Footer>}
+	</HTable>
+)

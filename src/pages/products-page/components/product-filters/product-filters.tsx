@@ -1,5 +1,5 @@
 import type { Key } from '@heroui/react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { CategorySelect, type ICategories } from '../category-select'
 import { ResetFilterButton } from '../reset-filters-button'
 import { Search } from '../search'
@@ -9,27 +9,22 @@ import { StatusSelect, type IStatus } from '../status-select'
 import { StockSelect, type IStock } from '../stock-select'
 
 interface IMocks {
-	sortings: ISorting[]
-	statuses: IStatus[]
-	categories: ICategories[]
+	sorting: ISorting[]
+	status: IStatus[]
 	stock: IStock[]
 }
 
-const mocks: IMocks = {
-	sortings: [
+const filters: IMocks = {
+	sorting: [
 		{ id: 'asc', label: 'По убыванию' },
 		{ id: 'desc', label: 'По возрастанию' },
 		{ id: 'recent', label: 'Недавние' },
 	],
-	statuses: [
+	status: [
 		{ id: 'all', label: 'Все' },
 		{ id: 'active', label: 'Активен' },
 		{ id: 'draft', label: 'Черновик' },
 		{ id: 'archive', label: 'Архив' },
-	],
-	categories: [
-		{ id: 'electronic', label: 'Электороника' },
-		{ id: 'garden', label: 'Садовые принадлежности' },
 	],
 	stock: [
 		{ id: 'in_stock', label: 'В наличии' },
@@ -37,20 +32,35 @@ const mocks: IMocks = {
 	],
 }
 
-export const ProductFilters = () => {
+interface ProductFiltersProps {
+	categories: string[]
+	category: string | null
+	onCategoryChange: (category: string | null) => void
+}
+
+export const ProductFilters: React.FC<ProductFiltersProps> = ({
+	categories,
+	category,
+	onCategoryChange,
+}) => {
 	const [searchValue, setSearchValue] = useState<string>('')
-	const [category, setCategory] = useState<Key | null>(null)
 	const [sorting, setSorting] = useState<Key | null>(null)
 	const [status, setStatus] = useState<Key | null>(null)
 	const [stock, setStock] = useState<Key | null>(null)
 
-	const selectedCategory = mocks.categories.find(c => c.id === category)
-	const selectedSorting = mocks.sortings.find(c => c.id === sorting)
-	const selectedStatus = mocks.statuses.find(c => c.id === status)
-	const selectedStock = mocks.stock.find(c => c.id === stock)
+	const selectedSorting = filters.sorting.find(c => c.id === sorting)
+	const selectedStatus = filters.status.find(c => c.id === status)
+	const selectedStock = filters.stock.find(c => c.id === stock)
+
+	const categoryOptions = useMemo<ICategories[]>(
+		() => categories.map(name => ({ id: name, label: name })),
+		[categories],
+	)
+
+	const selectedCategory = categoryOptions.find(c => c.id === category)
 
 	const resetFilters = () => {
-		setCategory(null)
+		onCategoryChange(null)
 		setSorting(null)
 		setStatus(null)
 		setStock(null)
@@ -63,23 +73,23 @@ export const ProductFilters = () => {
 					<Search value={searchValue} onChange={newValue => setSearchValue(newValue)} />
 					<div className='flex gap-2 items-center'>
 						<CategorySelect
-							categories={mocks.categories}
-							onChange={newValue => setCategory(newValue)}
+							categories={categoryOptions}
+							onChange={key => onCategoryChange(key === null ? null : String(key))}
 							value={category}
 						/>
 						<StatusSelect
-							statuses={mocks.statuses}
+							statuses={filters.status}
 							value={status}
 							onChange={newValue => setStatus(newValue)}
 						/>
 						<StockSelect
-							stock={mocks.stock}
+							stock={filters.stock}
 							value={stock}
 							onChange={newValue => setStock(newValue)}
 						/>
 						<ResetFilterButton onClick={resetFilters} />
 						<SortingSelect
-							sortings={mocks.sortings}
+							sortings={filters.sorting}
 							value={sorting}
 							onChange={newValue => setSorting(newValue)}
 						/>
@@ -90,7 +100,7 @@ export const ProductFilters = () => {
 			<div className='flex gap-3'>
 				{selectedCategory && (
 					<SelectedFilter
-						onClick={() => setCategory(null)}
+						onClick={() => onCategoryChange(null)}
 						categoryName={'Категория'}
 						selectedFilter={selectedCategory?.label}
 					/>

@@ -1,9 +1,9 @@
 import type { Key } from '@heroui/react'
-import type { TProductStatusFilter } from '@shared/types'
+import type { TProductStatus } from '@shared/types'
 import { Select } from '@shared/ui'
 
 export interface IStatus {
-	id: TProductStatusFilter
+	id: TProductStatus
 	label: string
 }
 

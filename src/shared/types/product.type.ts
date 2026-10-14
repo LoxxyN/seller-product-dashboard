@@ -1,5 +1,4 @@
 export type TProductStatus = 'active' | 'archive' | 'draft'
-export type TProductStatusFilter = TProductStatus | 'all'
 
 export interface IProduct {
 	id: string

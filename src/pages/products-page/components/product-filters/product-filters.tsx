@@ -21,7 +21,6 @@ const filters: IMocks = {
 		{ id: 'recent', label: 'Недавние' },
 	],
 	status: [
-		{ id: 'all', label: 'Все' },
 		{ id: 'active', label: 'Активен' },
 		{ id: 'draft', label: 'Черновик' },
 		{ id: 'archive', label: 'Архив' },

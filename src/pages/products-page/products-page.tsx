@@ -11,7 +11,7 @@ export const ProductsPage = () => {
 		useProductFilters(mockProducts)
 
 	return (
-		<div>
+		<>
 			<div className='flex flex-col mb-5'>
 				<PageHeading
 					productQuantity={productQuantity}
@@ -31,6 +31,6 @@ export const ProductsPage = () => {
 			</div>
 
 			<ProductTable products={filteredProducts} />
-		</div>
+		</>
 	)
 }

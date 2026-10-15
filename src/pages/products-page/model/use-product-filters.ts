@@ -5,6 +5,7 @@ import { filterProducts, type IProductFilters } from './filters'
 const DEFAULT_FILTERS: IProductFilters = {
 	category: null,
 	status: null,
+	stock: null,
 }
 
 export const useProductFilters = (products: IProduct[]) => {
@@ -24,7 +25,8 @@ export const useProductFilters = (products: IProduct[]) => {
 
 	const resetFilters = useCallback(() => setFilters(DEFAULT_FILTERS), [])
 
-	const hasActiveFilters = filters.category !== null || filters.status !== null
+	const hasActiveFilters =
+		filters.category !== null || filters.status !== null || filters.stock !== null
 
 	return {
 		filters,

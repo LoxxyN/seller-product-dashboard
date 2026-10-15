@@ -1,8 +1,9 @@
 import type { Key } from '@heroui/react'
 import { Select } from '@shared/ui'
+import type { TStockFilter } from '../../model/filters'
 
 export interface IStock {
-	id: 'not_in_stock' | 'in_stock'
+	id: TStockFilter
 	label: string
 }
 

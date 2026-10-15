@@ -1,7 +1,7 @@
 import type { Key } from '@heroui/react'
 import type { TProductStatus } from '@shared/types'
 import { useMemo, useState } from 'react'
-import type { IProductFilters } from '../../model/filters'
+import type { IProductFilters, TStockFilter } from '../../model/filters'
 import { CategorySelect, type ICategories } from '../category-select'
 import { ResetFilterButton } from '../reset-filters-button'
 import { Search } from '../search'
@@ -35,6 +35,8 @@ const filterOptions: IMocks = {
 
 const isProductStatus = (key: Key | null): key is TProductStatus =>
 	filterOptions.status.some(status => status.id === key)
+const isStockFilter = (key: Key | null): key is TStockFilter =>
+	filterOptions.stock.some(stock => stock.id === key)
 
 export const ProductFilters: React.FC<ProductFiltersProps> = ({
 	categories,
@@ -43,7 +45,6 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 	onReset,
 }) => {
 	const [searchValue, setSearchValue] = useState<string>('')
-	const [stock, setStock] = useState<Key | null>(null)
 
 	const categoryOptions = useMemo<ICategories[]>(
 		() => categories.map(name => ({ id: name, label: name })),
@@ -52,12 +53,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 
 	const selectedCategory = categoryOptions.find(c => c.id === filters.category)
 	const selectedStatus = filterOptions.status.find(s => s.id === filters.status)
-	const selectedStock = filterOptions.stock.find(c => c.id === stock)
-
-	const resetFilters = () => {
-		onReset()
-		setStock(null)
-	}
+	const selectedStock = filterOptions.stock.find(c => c.id === filters.stock)
 
 	return (
 		<>
@@ -77,10 +73,10 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 						/>
 						<StockSelect
 							stock={filterOptions.stock}
-							value={stock}
-							onChange={newValue => setStock(newValue)}
+							value={filters.stock}
+							onChange={key => onFiltersChange({ stock: isStockFilter(key) ? key : null })}
 						/>
-						<ResetFilterButton onClick={resetFilters} />
+						<ResetFilterButton onClick={onReset} />
 					</div>
 				</div>
 			</div>
@@ -102,7 +98,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 				)}
 				{selectedStock && (
 					<SelectedFilter
-						onClick={() => setStock(null)}
+						onClick={() => onFiltersChange({ stock: null })}
 						categoryName={'Наличие'}
 						selectedFilter={selectedStock?.label}
 					/>

@@ -1,6 +1,6 @@
 import { Description, FieldError, Label, SearchField } from '@heroui/react'
 
-type SearchInputProps = {
+interface SearchInputProps {
 	label?: string
 	description?: string
 	placeholder?: string

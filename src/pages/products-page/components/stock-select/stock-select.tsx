@@ -1,12 +1,13 @@
 import type { Key } from '@heroui/react'
 import { Select } from '@shared/ui'
+import type { TStockFilter } from '../../model/filters'
 
 export interface IStock {
-	id: string
+	id: TStockFilter
 	label: string
 }
 
-type StockSelectProps = {
+interface StockSelectProps {
 	stock: IStock[]
 	value: Key | null
 	onChange: (value: Key | null) => void

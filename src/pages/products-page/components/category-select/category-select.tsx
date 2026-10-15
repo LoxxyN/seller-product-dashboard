@@ -6,7 +6,7 @@ export interface ICategories {
 	label: string
 }
 
-type CategorySelectProps = {
+interface CategorySelectProps {
 	categories: ICategories[]
 	value: Key | null
 	onChange: (value: Key | null) => void

@@ -1,6 +1,6 @@
 import { CloseButton } from '@heroui/react'
 
-type SelectedFilterProps = {
+interface SelectedFilterProps {
 	categoryName: string | undefined
 	selectedFilter: string | undefined
 	onClick: () => void

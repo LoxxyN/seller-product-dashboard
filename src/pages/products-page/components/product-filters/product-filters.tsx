@@ -1,35 +1,31 @@
 import type { Key } from '@heroui/react'
-import { useState } from 'react'
+import type { TProductStatus } from '@shared/types'
+import { useMemo, useState } from 'react'
+import type { IProductFilters, TStockFilter } from '../../model/filters'
 import { CategorySelect, type ICategories } from '../category-select'
 import { ResetFilterButton } from '../reset-filters-button'
 import { Search } from '../search'
-import { SelectedFilter } from '../selected-filter/selected-filter'
-import { SortingSelect, type ISorting } from '../sorting-select'
+import { SelectedFilter } from '../selected-filter'
 import { StatusSelect, type IStatus } from '../status-select'
 import { StockSelect, type IStock } from '../stock-select'
 
 interface IMocks {
-	sortings: ISorting[]
-	statuses: IStatus[]
-	categories: ICategories[]
+	status: IStatus[]
 	stock: IStock[]
 }
 
-const mocks: IMocks = {
-	sortings: [
-		{ id: 'asc', label: 'По убыванию' },
-		{ id: 'desc', label: 'По возрастанию' },
-		{ id: 'recent', label: 'Недавние' },
-	],
-	statuses: [
-		{ id: 'all', label: 'Все' },
+interface ProductFiltersProps {
+	categories: string[]
+	filters: IProductFilters
+	onFiltersChange: (patch: Partial<IProductFilters>) => void
+	onReset: () => void
+}
+
+const filterOptions: IMocks = {
+	status: [
 		{ id: 'active', label: 'Активен' },
 		{ id: 'draft', label: 'Черновик' },
 		{ id: 'archive', label: 'Архив' },
-	],
-	categories: [
-		{ id: 'electronic', label: 'Электороника' },
-		{ id: 'garden', label: 'Садовые принадлежности' },
 	],
 	stock: [
 		{ id: 'in_stock', label: 'В наличии' },
@@ -37,24 +33,27 @@ const mocks: IMocks = {
 	],
 }
 
-export const ProductFilters = () => {
+const isProductStatus = (key: Key | null): key is TProductStatus =>
+	filterOptions.status.some(status => status.id === key)
+const isStockFilter = (key: Key | null): key is TStockFilter =>
+	filterOptions.stock.some(stock => stock.id === key)
+
+export const ProductFilters: React.FC<ProductFiltersProps> = ({
+	categories,
+	filters,
+	onFiltersChange,
+	onReset,
+}) => {
 	const [searchValue, setSearchValue] = useState<string>('')
-	const [category, setCategory] = useState<Key | null>(null)
-	const [sorting, setSorting] = useState<Key | null>(null)
-	const [status, setStatus] = useState<Key | null>(null)
-	const [stock, setStock] = useState<Key | null>(null)
 
-	const selectedCategory = mocks.categories.find(c => c.id === category)
-	const selectedSorting = mocks.sortings.find(c => c.id === sorting)
-	const selectedStatus = mocks.statuses.find(c => c.id === status)
-	const selectedStock = mocks.stock.find(c => c.id === stock)
+	const categoryOptions = useMemo<ICategories[]>(
+		() => categories.map(name => ({ id: name, label: name })),
+		[categories],
+	)
 
-	const resetFilters = () => {
-		setCategory(null)
-		setSorting(null)
-		setStatus(null)
-		setStock(null)
-	}
+	const selectedCategory = categoryOptions.find(c => c.id === filters.category)
+	const selectedStatus = filterOptions.status.find(s => s.id === filters.status)
+	const selectedStock = filterOptions.stock.find(c => c.id === filters.stock)
 
 	return (
 		<>
@@ -63,26 +62,21 @@ export const ProductFilters = () => {
 					<Search value={searchValue} onChange={newValue => setSearchValue(newValue)} />
 					<div className='flex gap-2 items-center'>
 						<CategorySelect
-							categories={mocks.categories}
-							onChange={newValue => setCategory(newValue)}
-							value={category}
+							categories={categoryOptions}
+							value={filters.category}
+							onChange={key => onFiltersChange({ category: key === null ? null : String(key) })}
 						/>
 						<StatusSelect
-							statuses={mocks.statuses}
-							value={status}
-							onChange={newValue => setStatus(newValue)}
+							statuses={filterOptions.status}
+							value={filters.status}
+							onChange={key => onFiltersChange({ status: isProductStatus(key) ? key : null })}
 						/>
 						<StockSelect
-							stock={mocks.stock}
-							value={stock}
-							onChange={newValue => setStock(newValue)}
+							stock={filterOptions.stock}
+							value={filters.stock}
+							onChange={key => onFiltersChange({ stock: isStockFilter(key) ? key : null })}
 						/>
-						<ResetFilterButton onClick={resetFilters} />
-						<SortingSelect
-							sortings={mocks.sortings}
-							value={sorting}
-							onChange={newValue => setSorting(newValue)}
-						/>
+						<ResetFilterButton onClick={onReset} />
 					</div>
 				</div>
 			</div>
@@ -90,30 +84,23 @@ export const ProductFilters = () => {
 			<div className='flex gap-3'>
 				{selectedCategory && (
 					<SelectedFilter
-						onClick={() => setCategory(null)}
+						onClick={() => onFiltersChange({ category: null })}
 						categoryName={'Категория'}
 						selectedFilter={selectedCategory?.label}
 					/>
 				)}
 				{selectedStatus && (
 					<SelectedFilter
-						onClick={() => setStatus(null)}
+						onClick={() => onFiltersChange({ status: null })}
 						categoryName={'Статус'}
 						selectedFilter={selectedStatus?.label}
 					/>
 				)}
 				{selectedStock && (
 					<SelectedFilter
-						onClick={() => setStock(null)}
+						onClick={() => onFiltersChange({ stock: null })}
 						categoryName={'Наличие'}
 						selectedFilter={selectedStock?.label}
-					/>
-				)}
-				{selectedSorting && (
-					<SelectedFilter
-						onClick={() => setSorting(null)}
-						categoryName={'Сортировать по'}
-						selectedFilter={selectedSorting?.label}
 					/>
 				)}
 			</div>

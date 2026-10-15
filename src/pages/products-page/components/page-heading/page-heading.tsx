@@ -1,6 +1,6 @@
 import { pluralizeTovar } from '../../utils'
 
-type PageHeadingProps = {
+interface PageHeadingProps {
 	productQuantity: number
 	actionButtonSlot: React.ReactNode
 }

@@ -1,12 +1,13 @@
 import type { Key } from '@heroui/react'
+import type { TProductStatus } from '@shared/types'
 import { Select } from '@shared/ui'
 
 export interface IStatus {
-	id: string
+	id: TProductStatus
 	label: string
 }
 
-type StatusSelectProps = {
+interface StatusSelectProps {
 	statuses: IStatus[]
 	value: Key | null
 	onChange: (value: Key | null) => void

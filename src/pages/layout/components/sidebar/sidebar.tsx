@@ -3,7 +3,7 @@ import { Navbar } from '../navbar'
 
 export const Sidebar = () => {
 	return (
-		<aside className='px-4 py-6 h-full flex flex-col justify-between'>
+		<aside className='bg-surface px-4 py-6 h-full flex flex-col justify-between'>
 			<Navbar />
 			<footer>
 				<div className='mb-4'>

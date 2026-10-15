@@ -13,7 +13,11 @@ interface StockSelectProps {
 	onChange: (value: Key | null) => void
 }
 
-export const StockSelect: React.FC<StockSelectProps> = ({ stock, value, onChange }) => {
+export const StockSelect: React.FC<StockSelectProps> = ({
+	stock,
+	value,
+	onChange,
+}) => {
 	return (
 		<>
 			<Select<IStock>

@@ -17,7 +17,10 @@ const compare = (a: IProduct, b: IProduct, column: keyof IProduct) => {
 	return String(x ?? '').localeCompare(String(y ?? ''), 'ru')
 }
 
-export const useSortedProducts = (items: IProduct[], { column, direction }: SortDescriptor) =>
+export const useSortedProducts = (
+	items: IProduct[],
+	{ column, direction }: SortDescriptor,
+) =>
 	useMemo(() => {
 		const key = column as keyof IProduct
 		const sign = direction === 'descending' ? -1 : 1

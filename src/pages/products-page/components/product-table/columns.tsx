@@ -11,7 +11,9 @@ export const productColumns: TableColumn<IProduct>[] = [
 		label: '',
 		isCustom: true,
 		renderHeader: () => <SelectionCheckbox label='Выбрать все' />,
-		renderCell: item => <SelectionCheckbox label={`Выбрать ${item.name}`} variant='secondary' />,
+		renderCell: item => (
+			<SelectionCheckbox label={`Выбрать ${item.name}`} variant='secondary' />
+		),
 	},
 	{
 		id: 'name',
@@ -29,7 +31,9 @@ export const productColumns: TableColumn<IProduct>[] = [
 		id: 'price',
 		label: 'Цена',
 		allowsSorting: true,
-		renderCell: item => <span className='font-medium'>{formatPrice(item.price)}</span>,
+		renderCell: item => (
+			<span className='font-medium'>{formatPrice(item.price)}</span>
+		),
 	},
 	{
 		id: 'stock',
@@ -46,7 +50,9 @@ export const productColumns: TableColumn<IProduct>[] = [
 		id: 'updatedAt',
 		label: 'Обновлён',
 		allowsSorting: true,
-		renderCell: item => <span className='text-muted'>{formatDate(item.updatedAt)}</span>,
+		renderCell: item => (
+			<span className='text-muted'>{formatDate(item.updatedAt)}</span>
+		),
 	},
 	{
 		id: 'actions',

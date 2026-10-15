@@ -12,7 +12,11 @@ interface CategorySelectProps {
 	onChange: (value: Key | null) => void
 }
 
-export const CategorySelect: React.FC<CategorySelectProps> = ({ categories, value, onChange }) => {
+export const CategorySelect: React.FC<CategorySelectProps> = ({
+	categories,
+	value,
+	onChange,
+}) => {
 	return (
 		<>
 			<Select<ICategories>

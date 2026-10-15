@@ -1,4 +1,10 @@
-import { Description, Select as HSelect, Label, ListBox, type Key } from '@heroui/react'
+import {
+	Description,
+	Select as HSelect,
+	Label,
+	ListBox,
+	type Key,
+} from '@heroui/react'
 import { SelectItem } from './select-item'
 
 interface SelectItem {

@@ -10,7 +10,10 @@ interface ProductTableProps {
 	renderEmptyState?: () => React.ReactNode
 }
 
-export const ProductTable: React.FC<ProductTableProps> = ({ products, renderEmptyState }) => {
+export const ProductTable: React.FC<ProductTableProps> = ({
+	products,
+	renderEmptyState,
+}) => {
 	const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set())
 	const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
 		column: 'updatedAt',

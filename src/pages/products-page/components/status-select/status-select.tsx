@@ -13,7 +13,11 @@ interface StatusSelectProps {
 	onChange: (value: Key | null) => void
 }
 
-export const StatusSelect: React.FC<StatusSelectProps> = ({ statuses, value, onChange }) => {
+export const StatusSelect: React.FC<StatusSelectProps> = ({
+	statuses,
+	value,
+	onChange,
+}) => {
 	return (
 		<>
 			<Select<IStatus>

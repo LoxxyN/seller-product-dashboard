@@ -59,22 +59,31 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 		<>
 			<div className='my-5 flex flex-col'>
 				<div className='flex justify-between items-center'>
-					<Search value={searchValue} onChange={newValue => setSearchValue(newValue)} />
+					<Search
+						value={searchValue}
+						onChange={newValue => setSearchValue(newValue)}
+					/>
 					<div className='flex gap-2 items-center'>
 						<CategorySelect
 							categories={categoryOptions}
 							value={filters.category}
-							onChange={key => onFiltersChange({ category: key === null ? null : String(key) })}
+							onChange={key =>
+								onFiltersChange({ category: key === null ? null : String(key) })
+							}
 						/>
 						<StatusSelect
 							statuses={filterOptions.status}
 							value={filters.status}
-							onChange={key => onFiltersChange({ status: isProductStatus(key) ? key : null })}
+							onChange={key =>
+								onFiltersChange({ status: isProductStatus(key) ? key : null })
+							}
 						/>
 						<StockSelect
 							stock={filterOptions.stock}
 							value={filters.stock}
-							onChange={key => onFiltersChange({ stock: isStockFilter(key) ? key : null })}
+							onChange={key =>
+								onFiltersChange({ stock: isStockFilter(key) ? key : null })
+							}
 						/>
 						<ResetFilterButton onClick={onReset} />
 					</div>

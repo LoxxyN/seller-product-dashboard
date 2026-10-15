@@ -5,7 +5,10 @@ interface PageHeadingProps {
 	actionButtonSlot: React.ReactNode
 }
 
-export const PageHeading: React.FC<PageHeadingProps> = ({ productQuantity, actionButtonSlot }) => {
+export const PageHeading: React.FC<PageHeadingProps> = ({
+	productQuantity,
+	actionButtonSlot,
+}) => {
 	return (
 		<div className='flex justify-between items-center'>
 			<div className='flex flex-col gap-1'>

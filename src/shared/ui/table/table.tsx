@@ -25,7 +25,9 @@ interface ITableCustomColumn<T extends ITableRow> extends ITableBaseColumn<T> {
 	isCustom: true
 }
 
-export type TableColumn<T extends ITableRow> = ITableDataColumn<T> | ITableCustomColumn<T>
+export type TableColumn<T extends ITableRow> =
+	| ITableDataColumn<T>
+	| ITableCustomColumn<T>
 
 interface ITableClassNames {
 	root?: string
@@ -54,7 +56,10 @@ interface ITableProps<T extends ITableRow> {
 	footer?: React.ReactNode
 }
 
-const renderDefaultCell = <T extends ITableRow>(item: T, column: TableColumn<T>) => {
+const renderDefaultCell = <T extends ITableRow>(
+	item: T,
+	column: TableColumn<T>,
+) => {
 	if (column.isCustom) {
 		return null
 	}
@@ -93,8 +98,13 @@ export const Table = <T extends ITableRow>({
 					{column => (
 						<HTable.Column
 							id={column.id}
-							className={cn(column.align === 'end' && 'text-end', classNames?.column)}
-							style={column.width === undefined ? undefined : { width: column.width }}
+							className={cn(
+								column.align === 'end' && 'text-end',
+								classNames?.column,
+							)}
+							style={
+								column.width === undefined ? undefined : { width: column.width }
+							}
 							isRowHeader={column.isRowHeader}
 							allowsSorting={column.allowsSorting}
 						>
@@ -117,14 +127,20 @@ export const Table = <T extends ITableRow>({
 						</HTable.Column>
 					)}
 				</HTable.Header>
-				<HTable.Body className={classNames?.body} renderEmptyState={renderEmptyState}>
+				<HTable.Body
+					className={classNames?.body}
+					renderEmptyState={renderEmptyState}
+				>
 					<HTable.Collection items={items}>
 						{item => (
 							<HTable.Row id={item.id} className={classNames?.row}>
 								<HTable.Collection items={columns}>
 									{column => (
 										<HTable.Cell
-											className={cn(column.align === 'end' && 'text-end', classNames?.cell)}
+											className={cn(
+												column.align === 'end' && 'text-end',
+												classNames?.cell,
+											)}
 										>
 											{column.renderCell
 												? column.renderCell(item)
@@ -138,6 +154,8 @@ export const Table = <T extends ITableRow>({
 				</HTable.Body>
 			</HTable.Content>
 		</HTable.ScrollContainer>
-		{footer && <HTable.Footer className={classNames?.footer}>{footer}</HTable.Footer>}
+		{footer && (
+			<HTable.Footer className={classNames?.footer}>{footer}</HTable.Footer>
+		)}
 	</HTable>
 )

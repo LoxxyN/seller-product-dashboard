@@ -12,7 +12,11 @@ interface SortingSelectProps {
 	onChange: (value: Key | null) => void
 }
 
-export const SortingSelect: React.FC<SortingSelectProps> = ({ value, onChange, sortings }) => {
+export const SortingSelect: React.FC<SortingSelectProps> = ({
+	value,
+	onChange,
+	sortings,
+}) => {
 	return (
 		<>
 			<Select<ISorting>

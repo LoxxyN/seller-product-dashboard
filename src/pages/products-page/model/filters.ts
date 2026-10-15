@@ -10,7 +10,7 @@ export interface IProductFilters {
 
 const matchesStock = (stock: TStockFilter | null, product: IProduct) => {
 	if (!stock) return true
-	return stock === 'in_stock' ? product.stock > 0 : product.stock < 0
+	return stock === 'in_stock' ? product.stock > 0 : product.stock === 0
 }
 
 export const filterProducts = (

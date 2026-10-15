@@ -1,13 +1,13 @@
 import { Button } from '@heroui/react'
 import { mockProducts } from '@shared/lib'
 import { Plus } from 'lucide-react'
-import { PageHeading, ProductFilters, ProductTable } from './components'
+import { PageHeading, ProductFilters, ProductsTableEmpty, ProductTable } from './components'
 import { useProductFilters } from './model/use-product-filters'
 
 const productQuantity = mockProducts.length
 
 export const ProductsPage = () => {
-	const { filters, categories, filteredProducts, updateFilters, resetFilters } =
+	const { filters, categories, filteredProducts, updateFilters, resetFilters, hasActiveFilters } =
 		useProductFilters(mockProducts)
 
 	return (
@@ -30,7 +30,12 @@ export const ProductsPage = () => {
 				/>
 			</div>
 
-			<ProductTable products={filteredProducts} />
+			<ProductTable
+				products={filteredProducts}
+				renderEmptyState={() => (
+					<ProductsTableEmpty resetFilters={resetFilters} hasActiveFilters={hasActiveFilters} />
+				)}
+			/>
 		</>
 	)
 }

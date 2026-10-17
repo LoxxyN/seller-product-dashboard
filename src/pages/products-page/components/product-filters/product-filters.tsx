@@ -1,6 +1,6 @@
 import type { Key } from '@heroui/react'
 import type { TProductStatus } from '@shared/types'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import type { IProductFilters, TStockFilter } from '../../model/filters'
 import { CategorySelect, type ICategories } from '../category-select'
 import { ResetFilterButton } from '../reset-filters-button'
@@ -44,8 +44,6 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 	onFiltersChange,
 	onReset,
 }) => {
-	const [searchValue, setSearchValue] = useState<string>('')
-
 	const categoryOptions = useMemo<ICategories[]>(
 		() => categories.map(name => ({ id: name, label: name })),
 		[categories],
@@ -60,8 +58,8 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 			<div className='my-5 flex flex-col'>
 				<div className='flex justify-between items-center'>
 					<Search
-						value={searchValue}
-						onChange={newValue => setSearchValue(newValue)}
+						value={filters.search}
+						onChange={search => onFiltersChange({ search })}
 					/>
 					<div className='flex gap-2 items-center'>
 						<CategorySelect

@@ -1,4 +1,4 @@
 export const ROUTER = {
+	produtcs: '/',
 	analitycs: '/analytics',
-	produtcs: '/products',
 } as const

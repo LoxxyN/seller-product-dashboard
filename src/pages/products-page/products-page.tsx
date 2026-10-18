@@ -1,6 +1,7 @@
 import { Button } from '@heroui/react'
 import { mockProducts } from '@shared/lib'
 import { Plus } from 'lucide-react'
+import { useCallback } from 'react'
 import {
 	PageHeading,
 	ProductFilters,
@@ -20,6 +21,16 @@ export const ProductsPage = () => {
 		resetFilters,
 		hasActiveFilters,
 	} = useProductFilters(mockProducts)
+
+	const renderEmptyState = useCallback(
+		() => (
+			<ProductsTableEmpty
+				resetFilters={resetFilters}
+				hasActiveFilters={hasActiveFilters}
+			/>
+		),
+		[resetFilters, hasActiveFilters],
+	)
 
 	return (
 		<>
@@ -43,12 +54,7 @@ export const ProductsPage = () => {
 
 			<ProductTable
 				products={filteredProducts}
-				renderEmptyState={() => (
-					<ProductsTableEmpty
-						resetFilters={resetFilters}
-						hasActiveFilters={hasActiveFilters}
-					/>
-				)}
+				renderEmptyState={renderEmptyState}
 			/>
 		</>
 	)

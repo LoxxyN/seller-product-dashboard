@@ -1,5 +1,6 @@
 import type { Key } from '@heroui/react'
 import { Select } from '@shared/ui'
+import { memo } from 'react'
 import type { TStockFilter } from '../../model/filters'
 
 export interface IStock {
@@ -13,7 +14,7 @@ interface StockSelectProps {
 	onChange: (value: Key | null) => void
 }
 
-export const StockSelect: React.FC<StockSelectProps> = ({
+const StockSelectComponent: React.FC<StockSelectProps> = ({
 	stock,
 	value,
 	onChange,
@@ -30,3 +31,5 @@ export const StockSelect: React.FC<StockSelectProps> = ({
 		</>
 	)
 }
+
+export const StockSelect = memo(StockSelectComponent)

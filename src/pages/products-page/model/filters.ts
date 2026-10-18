@@ -1,4 +1,6 @@
 import type { IProduct, TProductStatus } from '@shared/types'
+import type { IStatus } from '../components/status-select'
+import type { IStock } from '../components/stock-select'
 
 export type TStockFilter = 'in_stock' | 'not_in_stock'
 
@@ -7,6 +9,11 @@ export interface IProductFilters {
 	category: string | null
 	status: TProductStatus | null
 	stock: TStockFilter | null
+}
+
+interface IMocks {
+	status: IStatus[]
+	stock: IStock[]
 }
 
 const matchesSearch = (search: string, product: IProduct) => {
@@ -35,3 +42,15 @@ export const filterProducts = (
 			(!status || product.status === status) &&
 			matchesStock(stock, product),
 	)
+
+export const filterOptions: IMocks = {
+	status: [
+		{ id: 'active', label: 'Активен' },
+		{ id: 'draft', label: 'Черновик' },
+		{ id: 'archive', label: 'Архив' },
+	],
+	stock: [
+		{ id: 'in_stock', label: 'В наличии' },
+		{ id: 'not_in_stock', label: 'Нет в наличии' },
+	],
+}

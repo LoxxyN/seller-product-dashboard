@@ -1,18 +1,11 @@
-import type { Key } from '@heroui/react'
-import type { TProductStatus } from '@shared/types'
-import { useMemo } from 'react'
-import type { IProductFilters, TStockFilter } from '../../model/filters'
-import { CategorySelect, type ICategories } from '../category-select'
+import { memo, useMemo } from 'react'
+import type { IProductFilters } from '../../model/filters'
+import { filterOptions } from '../../model/filters'
+import { type ICategories } from '../category-select'
+import { ProductSelects } from '../product-selects/product-selects'
 import { ResetFilterButton } from '../reset-filters-button'
 import { Search } from '../search'
 import { SelectedFilter } from '../selected-filter'
-import { StatusSelect, type IStatus } from '../status-select'
-import { StockSelect, type IStock } from '../stock-select'
-
-interface IMocks {
-	status: IStatus[]
-	stock: IStock[]
-}
 
 interface ProductFiltersProps {
 	categories: string[]
@@ -21,24 +14,7 @@ interface ProductFiltersProps {
 	onReset: () => void
 }
 
-const filterOptions: IMocks = {
-	status: [
-		{ id: 'active', label: 'Активен' },
-		{ id: 'draft', label: 'Черновик' },
-		{ id: 'archive', label: 'Архив' },
-	],
-	stock: [
-		{ id: 'in_stock', label: 'В наличии' },
-		{ id: 'not_in_stock', label: 'Нет в наличии' },
-	],
-}
-
-const isProductStatus = (key: Key | null): key is TProductStatus =>
-	filterOptions.status.some(status => status.id === key)
-const isStockFilter = (key: Key | null): key is TStockFilter =>
-	filterOptions.stock.some(stock => stock.id === key)
-
-export const ProductFilters: React.FC<ProductFiltersProps> = ({
+const ProductFiltersComponent: React.FC<ProductFiltersProps> = ({
 	categories,
 	filters,
 	onFiltersChange,
@@ -61,30 +37,15 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 						value={filters.search}
 						onChange={search => onFiltersChange({ search })}
 					/>
-					<div className='flex gap-2 items-center'>
-						<CategorySelect
-							categories={categoryOptions}
-							value={filters.category}
-							onChange={key =>
-								onFiltersChange({ category: key === null ? null : String(key) })
-							}
+
+					<>
+						<ProductSelects
+							filters={filters}
+							categoryOptions={categoryOptions}
+							onFiltersChange={onFiltersChange}
+							resetButtonSlot={<ResetFilterButton onClick={onReset} />}
 						/>
-						<StatusSelect
-							statuses={filterOptions.status}
-							value={filters.status}
-							onChange={key =>
-								onFiltersChange({ status: isProductStatus(key) ? key : null })
-							}
-						/>
-						<StockSelect
-							stock={filterOptions.stock}
-							value={filters.stock}
-							onChange={key =>
-								onFiltersChange({ stock: isStockFilter(key) ? key : null })
-							}
-						/>
-						<ResetFilterButton onClick={onReset} />
-					</div>
+					</>
 				</div>
 			</div>
 
@@ -115,4 +76,4 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 	)
 }
 
-// Todo: Оптимизировать выбранные категории
+export const ProductFilters = memo(ProductFiltersComponent)

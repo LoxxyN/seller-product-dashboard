@@ -1,5 +1,6 @@
 import type { Key } from '@heroui/react'
 import { Select } from '@shared/ui'
+import { memo } from 'react'
 
 export interface ICategories {
 	id: string
@@ -12,7 +13,7 @@ interface CategorySelectProps {
 	onChange: (value: Key | null) => void
 }
 
-export const CategorySelect: React.FC<CategorySelectProps> = ({
+const CategorySelectComponent: React.FC<CategorySelectProps> = ({
 	categories,
 	value,
 	onChange,
@@ -29,3 +30,5 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
 		</>
 	)
 }
+
+export const CategorySelect = memo(CategorySelectComponent)

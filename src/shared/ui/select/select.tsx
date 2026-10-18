@@ -46,7 +46,7 @@ export const Select = <T extends SelectItem>({
 			variant={variant}
 			placeholder={placeholder}
 		>
-			<Label>{label}</Label>
+			{label && <Label>{label}</Label>}
 			<HSelect.Trigger>
 				<HSelect.Value />
 				{hasClearButton && <HSelect.ClearButton />}

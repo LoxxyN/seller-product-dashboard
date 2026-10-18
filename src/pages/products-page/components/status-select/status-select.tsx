@@ -1,6 +1,7 @@
 import type { Key } from '@heroui/react'
 import type { TProductStatus } from '@shared/types'
 import { Select } from '@shared/ui'
+import { memo } from 'react'
 
 export interface IStatus {
 	id: TProductStatus
@@ -13,7 +14,7 @@ interface StatusSelectProps {
 	onChange: (value: Key | null) => void
 }
 
-export const StatusSelect: React.FC<StatusSelectProps> = ({
+const StatusSelectComponent: React.FC<StatusSelectProps> = ({
 	statuses,
 	value,
 	onChange,
@@ -30,3 +31,5 @@ export const StatusSelect: React.FC<StatusSelectProps> = ({
 		</>
 	)
 }
+
+export const StatusSelect = memo(StatusSelectComponent)

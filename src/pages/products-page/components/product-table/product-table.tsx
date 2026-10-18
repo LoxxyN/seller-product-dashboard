@@ -1,7 +1,7 @@
 import type { Selection, SortDescriptor } from '@heroui/react'
 import type { IProduct } from '@shared/types'
 import { Table } from '@shared/ui'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { productColumns } from './columns'
 import { useSortedProducts } from './use-sorted-products'
 
@@ -10,7 +10,7 @@ interface ProductTableProps {
 	renderEmptyState?: () => React.ReactNode
 }
 
-export const ProductTable: React.FC<ProductTableProps> = ({
+const ProductTableComponent: React.FC<ProductTableProps> = ({
 	products,
 	renderEmptyState,
 }) => {
@@ -40,3 +40,5 @@ export const ProductTable: React.FC<ProductTableProps> = ({
 		/>
 	)
 }
+
+export const ProductTable = memo(ProductTableComponent)

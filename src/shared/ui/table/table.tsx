@@ -84,7 +84,9 @@ export const Table = <T extends ITableRow>({
 	footer,
 }: ITableProps<T>) => (
 	<HTable variant={variant} className={classNames?.root}>
-		<HTable.ScrollContainer className={classNames?.scrollContainer}>
+		<HTable.ScrollContainer
+			className={cn(classNames?.scrollContainer, 'overflow-y-auto')}
+		>
 			<HTable.Content
 				aria-label={ariaLabel}
 				className={classNames?.content}
@@ -94,7 +96,10 @@ export const Table = <T extends ITableRow>({
 				sortDescriptor={sortDescriptor}
 				onSortChange={onSortChange}
 			>
-				<HTable.Header className={classNames?.header} columns={columns}>
+				<HTable.Header
+					className={cn(classNames?.header, 'sticky top-0 z-10')}
+					columns={columns}
+				>
 					{column => (
 						<HTable.Column
 							id={column.id}

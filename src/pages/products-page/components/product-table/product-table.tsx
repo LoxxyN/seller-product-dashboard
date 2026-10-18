@@ -28,6 +28,7 @@ const ProductTableComponent: React.FC<ProductTableProps> = ({
 
 	return (
 		<Table
+			classNames={{ scrollContainer: 'h-[585px]', content: 'min-w-[600px]' }}
 			columns={productColumns}
 			items={items}
 			ariaLabel='Таблица товаров'

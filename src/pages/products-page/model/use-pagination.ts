@@ -1,35 +1,24 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
-export const usePagination = <T>(items: T[], initialPageSize: number = 50) => {
-	const [requestedPage, setRequestedPage] = useState(1)
-	const [pageSize, setPageSize] = useState(initialPageSize)
-	const [prevItems, setPrevItems] = useState(items)
+interface IPaginationControl {
+	page: number
+	pageSize: number
+	setPage: (page: number) => void
+	setPageSize: (size: number) => void
+}
 
-	if (prevItems !== items) {
-		setPrevItems(items)
-		setRequestedPage(1)
-	}
-
+export const usePagination = <T>(
+	items: T[],
+	{ page: requestedPage, pageSize, setPage, setPageSize }: IPaginationControl,
+) => {
 	const total = items.length
 	const totalPages = Math.max(1, Math.ceil(total / pageSize))
-	const page = Math.min(requestedPage, totalPages)
+	const page = Math.min(Math.max(1, requestedPage), totalPages)
 
 	const pageItems = useMemo(
 		() => items.slice((page - 1) * pageSize, page * pageSize),
 		[items, pageSize, page],
 	)
 
-	const changePageSize = useCallback((size: number) => {
-		setPageSize(size)
-		setRequestedPage(1)
-	}, [])
-
-	return {
-		page,
-		pageSize,
-		total,
-		pageItems,
-		setPage: setRequestedPage,
-		setPageSize: changePageSize,
-	}
+	return { page, pageSize, total, pageItems, setPage, setPageSize }
 }

@@ -1,5 +1,4 @@
 import { Button } from '@heroui/react'
-import { mockProducts } from '@shared/lib'
 import { Plus } from 'lucide-react'
 import { useCallback } from 'react'
 import {
@@ -8,11 +7,11 @@ import {
 	ProductsTableEmpty,
 	ProductTable,
 } from './components'
-import { useProductFilters } from './model/use-product-filters'
-
-const productQuantity = mockProducts.length
+import { ProductsLoading } from './loading'
+import { useProductFilters, useProducts } from './model'
 
 export const ProductsPage = () => {
+	const { products, isPending } = useProducts()
 	const {
 		filters,
 		categories,
@@ -20,7 +19,8 @@ export const ProductsPage = () => {
 		updateFilters,
 		resetFilters,
 		hasActiveFilters,
-	} = useProductFilters(mockProducts)
+	} = useProductFilters(products)
+	const productQuantity = products.length
 
 	const renderEmptyState = useCallback(
 		() => (
@@ -31,6 +31,8 @@ export const ProductsPage = () => {
 		),
 		[resetFilters, hasActiveFilters],
 	)
+
+	if (isPending) return <ProductsLoading />
 
 	return (
 		<>

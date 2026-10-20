@@ -11,8 +11,14 @@ export default defineConfig({
 			'@app': path.resolve(import.meta.dirname, './src/app'),
 			'@pages': path.resolve(import.meta.dirname, './src/pages'),
 			'@shared': path.resolve(import.meta.dirname, './src/shared'),
-			'@widgets': path.resolve(import.meta.dirname, './src/widgets'),
-			'@features': path.resolve(import.meta.dirname, './src/features'),
+		},
+	},
+	server: {
+		proxy: {
+			'/api': {
+				target: 'http://localhost:3000',
+				rewrite: p => p.replace(/^\/api/, ''),
+			},
 		},
 	},
 })

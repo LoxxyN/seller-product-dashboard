@@ -1,24 +1,31 @@
 import { useDebounce } from '@shared/lib'
 import type { IProduct } from '@shared/types'
-import { useCallback, useMemo, useState } from 'react'
+import { debounce, useQueryStates } from 'nuqs'
+import { useCallback, useMemo } from 'react'
 import { filterProducts, type IProductFilters } from './filters'
-
-const DEFAULT_FILTERS: IProductFilters = {
-	search: '',
-	category: null,
-	status: null,
-	stock: null,
-}
+import { productParsers } from './search-params'
 
 const SEARCH_DEBOUNCE = 300
 
+const parsers = {
+	search: productParsers.search,
+	category: productParsers.category,
+	status: productParsers.status,
+	stock: productParsers.stock,
+	page: productParsers.page,
+}
+
 export const useProductFilters = (products: IProduct[]) => {
-	const [filters, setFilters] = useState<IProductFilters>(DEFAULT_FILTERS)
+	const [params, setParams] = useQueryStates(parsers, { history: 'push' })
+	const { search, category, status, stock } = params
 
-	const debounceSearch = useDebounce(filters.search, SEARCH_DEBOUNCE)
-	const appliedSearch = filters.search === '' ? '' : debounceSearch
+	const filters: IProductFilters = useMemo(
+		() => ({ search, category, status, stock }),
+		[search, category, status, stock],
+	)
 
-	const { category, status, stock } = filters
+	const debounceSearch = useDebounce(search, SEARCH_DEBOUNCE)
+	const appliedSearch = search === '' ? '' : debounceSearch
 
 	const filteredProducts = useMemo(
 		() =>
@@ -37,18 +44,35 @@ export const useProductFilters = (products: IProduct[]) => {
 	)
 
 	const updateFilters = useCallback(
-		(patch: Partial<IProductFilters>) =>
-			setFilters(prev => ({ ...prev, ...patch })),
-		[],
+		(patch: Partial<IProductFilters>) => {
+			const isTyping = Object.keys(patch).length === 1 && Boolean(patch.search)
+			setParams(
+				{ ...patch, page: null }, // page: null = сброс на 1 в том же обновлении
+				isTyping
+					? { history: 'replace', limitUrlUpdates: debounce(SEARCH_DEBOUNCE) }
+					: undefined,
+			)
+		},
+		[setParams],
 	)
 
-	const resetFilters = useCallback(() => setFilters(DEFAULT_FILTERS), [])
+	const resetFilters = useCallback(
+		() =>
+			setParams({
+				search: null,
+				category: null,
+				status: null,
+				stock: null,
+				page: null,
+			}),
+		[setParams],
+	)
 
 	const hasActiveFilters =
-		filters.category !== null ||
-		filters.status !== null ||
-		filters.stock !== null ||
-		filters.search.trim() !== ''
+		category !== null ||
+		status !== null ||
+		stock !== null ||
+		search.trim() !== ''
 
 	return {
 		filters,

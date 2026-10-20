@@ -23,6 +23,7 @@
 		"concurrently": "^10.0.6",
 		"json-server": "^1.0.0-beta.15",
 		"lucide-react": "^1.54.0",
+		"nuqs": "^2.10.2",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
 		"react-router": "^8.4.0",

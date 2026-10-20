@@ -22,7 +22,7 @@
 
 .navbar__links-item:has(.navbar__links-link--active) {
 	background-color: var(--color-accent-soft);
-	color: var(--color-accent);
+	color: var(--color-accent-hover);
 }
 
 .navbar__links-link {

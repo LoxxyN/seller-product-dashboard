@@ -7,10 +7,11 @@ import {
 	ProductsTableEmpty,
 	ProductTable,
 } from './components'
+import { ProductsLoading } from './loading'
 import { useProductFilters, useProducts } from './model'
 
 export const ProductsPage = () => {
-	const { products } = useProducts()
+	const { products, isPending } = useProducts()
 	const {
 		filters,
 		categories,
@@ -19,6 +20,7 @@ export const ProductsPage = () => {
 		resetFilters,
 		hasActiveFilters,
 	} = useProductFilters(products)
+	const productQuantity = products.length
 
 	const renderEmptyState = useCallback(
 		() => (
@@ -30,7 +32,7 @@ export const ProductsPage = () => {
 		[resetFilters, hasActiveFilters],
 	)
 
-	const productQuantity = products.length
+	if (isPending) return <ProductsLoading />
 
 	return (
 		<>

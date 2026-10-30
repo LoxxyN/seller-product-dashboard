@@ -6,7 +6,7 @@ import {
 	type IProductFilters,
 	type TStockFilter,
 } from '../../model/filters'
-import { CategorySelect, type ICategories } from '../category-select'
+import { CategorySelect, type ICategories } from '@shared/ui'
 import { StatusSelect } from '../status-select'
 import { StockSelect } from '../stock-select'
 

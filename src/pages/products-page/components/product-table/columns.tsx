@@ -1,7 +1,7 @@
+import { formatPrice } from '@shared/lib/utils'
 import type { IProduct } from '@shared/types'
 import type { TableColumn } from '@shared/ui'
 import { formatDate } from '../../utils'
-import { formatPrice } from '@shared/utils'
 import { TableStatusChip } from '../table-status-chip'
 import { ActionsCell, NameCell, SelectionCheckbox, StockCell } from './cells'
 

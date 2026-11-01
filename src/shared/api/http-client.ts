@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URLe ?? '/api'
+const BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 export class HttpError extends Error {
 	status: number

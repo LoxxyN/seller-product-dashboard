@@ -1,11 +1,13 @@
-import { httpGet } from '@shared/api'
-import type { IProduct } from '@shared/types'
+import { adaptProducts, httpGet } from '@shared/api'
+import type { IProductDTO } from '@shared/types'
 import { useQuery } from '@tanstack/react-query'
 
-const EMPTY: IProduct[] = []
+const EMPTY: IProductDTO[] = []
 
-const getProducts = ({ signal }: { signal: AbortSignal }) =>
-	httpGet<IProduct[]>('/products', signal)
+const getProducts = async ({ signal }: { signal: AbortSignal }) => {
+	const response = await httpGet<IProductDTO[]>('/products', signal)
+	return adaptProducts(response)
+}
 
 export const useProducts = () => {
 	const query = useQuery({

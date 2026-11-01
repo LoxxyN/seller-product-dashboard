@@ -1,4 +1,4 @@
-import { formatPrice } from '@shared/utils'
+import { formatPrice } from '@shared/lib/utils'
 import { InfoCard } from '../info-card'
 
 export const AnalyticsHeading = () => {

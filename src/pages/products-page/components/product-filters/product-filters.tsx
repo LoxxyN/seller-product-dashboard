@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react'
 import type { IProductFilters } from '../../model/filters'
 import { filterOptions } from '../../model/filters'
-import { type ICategories } from '../category-select'
+import { type ICategories } from '@shared/ui'
 import { ProductSelects } from '../product-selects/product-selects'
 import { ResetFilterButton } from '../reset-filters-button'
 import { Search } from '../search'
